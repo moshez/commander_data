@@ -30,11 +30,7 @@ class _Command:
         return dataclasses.replace(self, _contents=self._contents + list(things))      
     def __getattr__(self, name):
         return self.extend([name.replace("_", "-")])
-    def __call__(self, **kwargs):
-        return self.extend(_parse_kwargs(kwargs))
-    def __getitem__(self, things):
-        if isinstance(things, str):
-            things = tuple([things])
-        return self.extend(things)       
+    def __call__(self, *args, **kwargs):
+        return self.extend(_parse_kwargs(kwargs)).extend(args)
         
 COMMAND = _Command()
