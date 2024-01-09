@@ -13,8 +13,7 @@ def _get_value_parts_none(value, key):
 @_get_value_parts.register(list)
 def _get_value_parts_list(value, key):
     for item in value:
-        yield key
-        yield item
+        yield from _get_value_parts(item, key)
 
 def _parse_kwargs(kwargs):
     for key, value in kwargs.items():
