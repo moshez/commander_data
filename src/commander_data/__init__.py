@@ -19,7 +19,7 @@ gives a sub-command that adds more items to the command:
 
 * :code:`.<attribute>`: Add the name of the attribute. Underscores become dashes.
 * :code:`(arg1, arg2, ..., key=value, ...)`: Add `--key <value>`.
-  
+
   * Underscores in :code:`key` become dashes.
   * A value of :code:`None` results in a flag.
   * A list results in ``--key <first value> --key <second value> ..``
@@ -31,3 +31,5 @@ import importlib.metadata
 from .api import COMMAND
 
 __version__ = importlib.metadata.version(__name__)
+
+__all__ = ["COMMAND", "__version__"]
