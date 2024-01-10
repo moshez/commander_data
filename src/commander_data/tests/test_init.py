@@ -35,3 +35,9 @@ class TestCommand(unittest.TestCase):
             list(COMMAND.git.commit(message="checkpoint")),
             equal_to(["git", "commit", "--message", "checkpoint"]),
         )
+
+    def test_short_arg(self):
+        assert_that(
+            list(COMMAND.python(m=None).venv("my-env")),
+            equal_to("python -m venv my-env".split()),
+        )
