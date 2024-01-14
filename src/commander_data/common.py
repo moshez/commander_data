@@ -26,9 +26,9 @@ class _Python:
         
 GIT = COMMAND.git
 
-LOCAL_PYTHON = _Python(COMMAND(sys.executable))
-PATH_PYTHON = _Python(COMMAND.python)
-BASE_PYTHON = _Python(COMMAND(sys.base_exec_prefix + "/bin/python3"))
+LOCAL_PYTHON = _Python.create(COMMAND(sys.executable))
+PATH_PYTHON = _Python.create(COMMAND.python)
+BASE_PYTHON = _Python.create(COMMAND(sys.base_exec_prefix + "/bin/python3"))
 
 DOCKER = COMMAND.docker
 

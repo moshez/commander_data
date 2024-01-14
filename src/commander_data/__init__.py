@@ -28,8 +28,8 @@ gives a sub-command that adds more items to the command:
 Those are composable in any order.
 """
 import importlib.metadata
-from .api import COMMAND
+from .api import COMMAND, run_all
 
 __version__ = importlib.metadata.version(__name__)
 
-__all__ = ["COMMAND", "__version__"]
+__all__ = ["COMMAND", "__version__", "run_all"]

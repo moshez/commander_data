@@ -47,3 +47,8 @@ class _Command:
 
 
 COMMAND = _Command()
+
+
+def run_all(run, *commands, **kwargs):
+    for a_command in commands:
+        run(a_command, **kwargs)
