@@ -19,3 +19,8 @@ class TestPython(unittest.TestCase):
         assert_that(
             list(common.PATH_PYTHON("script.py")), equal_to(["python", "script.py"])
         )
+
+    def test_python_getattr(self):
+        assert_that(
+            list(common.PATH_PYTHON.some_script), equal_to(["python", "some-script"])
+        )

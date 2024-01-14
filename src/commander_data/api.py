@@ -1,6 +1,6 @@
 import dataclasses
 import functools
-from typing import Any, Iterator, Iterable, Mapping, Self
+from typing import Any, Callable, Iterator, Iterable, Mapping, Protocol, Self
 
 
 @functools.singledispatch
@@ -29,6 +29,17 @@ def _parse_kwargs(kwargs: Mapping[str, Any]) -> Iterator[str]:
         yield from _get_value_parts(value, key)
 
 
+class CommandProtocol(Protocol):  # pragma: no cover
+    def __iter__(self) -> Iterator[str]:
+        ...
+
+    def __getattr__(self, name: str) -> Self:
+        ...
+
+    def __call__(self, *args: str, **kwargs: Any) -> Self:
+        ...
+
+
 @dataclasses.dataclass
 class _Command:
     _contents: list[str] = dataclasses.field(default_factory=list)
@@ -49,6 +60,6 @@ class _Command:
 COMMAND = _Command()
 
 
-def run_all(run, *commands, **kwargs):
+def run_all(run: Callable, *commands: Iterable[str], **kwargs: Any):
     for a_command in commands:
         run(a_command, **kwargs)

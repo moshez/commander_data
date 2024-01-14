@@ -1,14 +1,17 @@
 import dataclasses
 import sys
 
-from .api import COMMAND
+from .api import COMMAND, CommandProtocol
 
 
 @dataclasses.dataclass(frozen=True)
 class _Python:
-    _run: type(COMMAND)
-    module: type(COMMAND)
-    pip: type(COMMAND)
+    _run: CommandProtocol
+    module: CommandProtocol
+    pip: CommandProtocol
+
+    def __getattr__(self, name: str) -> CommandProtocol:
+        return getattr(self._run, name)
 
     def __call__(self, *args, **kwargs):
         return self._run(*args, **kwargs)
