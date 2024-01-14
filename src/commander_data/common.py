@@ -9,9 +9,6 @@ class _Python:
     module: type(COMMAND)
     pip: type(COMMAND)
 
-    def __getattr__(self, name: str):
-        return getattr(self._run, name)
-    
     def __call__(self, *args, **kwargs):
         return self._run(*args, **kwargs)
 

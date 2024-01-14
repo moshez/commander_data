@@ -1,12 +1,13 @@
 [build-system]
 requires = [
-    "setuptools"
+    "setuptools",
+    "autocalver",
 ]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "commander_data"
-version = "2022.3.6.2"
+dynamic = ["version"]
 description = "Prepare data for commands"
 readme = "README.rst"
 authors = [{name = "Moshe Zadka", email = "moshez@zadka.club"}]
@@ -39,3 +40,10 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 [project.urls]
 Homepage = "https://github.com/moshez/commander_data"
+
+[tool.autocalver]
+use = true
+log = "git-log-head"
+log_command = "git log -n 1 --date=iso"
+is_main_var = "GITHUB_REF"
+is_main_match = ".*/trunk$"

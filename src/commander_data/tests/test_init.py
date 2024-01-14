@@ -1,13 +1,22 @@
 import unittest
 from hamcrest import assert_that, equal_to, contains_string
 
-from .. import __version__, COMMAND
+from .. import __version__, COMMAND, run_all
 
 
 class TestInit(unittest.TestCase):
     def test_version(self):
         assert_that(__version__, contains_string("."))
 
+class TestRunAll(unittest.TestCase):
+
+    def test_simple_run_all(self):
+        keep = []
+        run_all(
+            keep.append,
+            ["git", "commit"],
+        )
+        assert_that(keep, equal_to([["git", "commit"]]))
 
 class TestCommand(unittest.TestCase):
     def test_basic(self):
