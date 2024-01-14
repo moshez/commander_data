@@ -8,8 +8,8 @@ class TestInit(unittest.TestCase):
     def test_version(self):
         assert_that(__version__, contains_string("."))
 
-class TestRunAll(unittest.TestCase):
 
+class TestRunAll(unittest.TestCase):
     def test_simple_run_all(self):
         keep = []
         run_all(
@@ -17,6 +17,7 @@ class TestRunAll(unittest.TestCase):
             ["git", "commit"],
         )
         assert_that(keep, equal_to([["git", "commit"]]))
+
 
 class TestCommand(unittest.TestCase):
     def test_basic(self):

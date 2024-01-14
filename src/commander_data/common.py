@@ -3,6 +3,7 @@ import sys
 
 from .api import COMMAND
 
+
 @dataclasses.dataclass(frozen=True)
 class _Python:
     _run: type(COMMAND)
@@ -20,7 +21,8 @@ class _Python:
         module = python("-m")
         pip = module("pip")
         return cls(_run=python, module=module, pip=pip)
-        
+
+
 GIT = COMMAND.git
 
 LOCAL_PYTHON = _Python.create(COMMAND(sys.executable))
@@ -30,4 +32,3 @@ BASE_PYTHON = _Python.create(COMMAND(sys.base_exec_prefix + "/bin/python3"))
 DOCKER = COMMAND.docker
 
 CONDA = COMMAND.conda
-
