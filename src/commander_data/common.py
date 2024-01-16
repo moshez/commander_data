@@ -1,4 +1,6 @@
 import dataclasses
+import pathlib
+import os
 import sys
 
 from .api import COMMAND, CommandProtocol
@@ -31,6 +33,21 @@ GIT = COMMAND.git
 LOCAL_PYTHON = _Python.create(COMMAND(sys.executable))
 PATH_PYTHON = _Python.create(COMMAND.python)
 BASE_PYTHON = _Python.create(COMMAND(sys.base_exec_prefix + "/bin/python3"))
+
+
+def env_python(env: str | pathlib.Path) -> CommandProtocol:
+    """
+    Return a virtual-env-specific Python
+
+    Args:
+        env: The directory of the virtual environment.
+
+    Return:
+        A command object with this Python
+    """
+    python_bin = os.fspath(pathlib.Path(env) / "bin" / "python")
+    return _Python.create(COMMAND(python_bin))
+
 
 DOCKER = COMMAND.docker
 

@@ -24,3 +24,14 @@ class TestPython(unittest.TestCase):
         assert_that(
             list(common.PATH_PYTHON.some_script), equal_to(["python", "some-script"])
         )
+
+    def test_env_python(self):
+        cmd = "/home/me/venvs/my-env/bin/python -m pip install -r requirements.txt"
+        assert_that(
+            list(
+                common.env_python("/home/me/venvs/my-env").pip.install(
+                    r="requirements.txt"
+                )
+            ),
+            cmd.split(),
+        )
