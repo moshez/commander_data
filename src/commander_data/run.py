@@ -1,23 +1,27 @@
+from __future__ import annotations
 import argparse
 import functools
 import io
+import logging
 import subprocess
-from typing import Callable, Sequence, Protocol, Self
+from typing import Any, Callable, Sequence, Protocol, Self
 
 import attrs
 
+LOGGER = logging.getLogger(__name__)
+
 class CalledProcessLike(Protocol): # pragma: no cover
     @property
-    def stdout(self) -> io.TextIOBase | io.TextIOWrapper:
+    def stdout(self) -> str:
         ...
-    def stderr(self) -> io.TextIOBase | io.TextIOWrapper:
+    def stderr(self) -> str:
         ...
 
 
 @attrs.frozen
 class _FakeCalledProcess:
-    stdout: io.TextIOBase = attrs.field(factory=io.StringIO, init=False)
-    stderr: io.TextIOBase = attrs.field(factory=io.StringIO, init=False)
+    stdout: str = attrs.field(default="", init=False)
+    stderr: str = attrs.field(default="", init=False)
     
 
 def _really_run(orig_run: Callable, cmdargs: Sequence[str], *args: Any, **kwargs: Any) -> CalledProcessLike:
