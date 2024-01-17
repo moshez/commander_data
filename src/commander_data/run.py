@@ -10,7 +10,8 @@ import attrs
 
 LOGGER = logging.getLogger(__name__)
 
-class CalledProcessLike(Protocol): # pragma: no cover
+
+class CalledProcessLike(Protocol):  # pragma: no cover
     @property
     def stdout(self) -> str:
         ...
@@ -24,9 +25,11 @@ class CalledProcessLike(Protocol): # pragma: no cover
 class _FakeCalledProcess:
     stdout: str = attrs.field(default="", init=False)
     stderr: str = attrs.field(default="", init=False)
-    
 
-def _really_run(orig_run: Callable, cmdargs: Sequence[str], *args: Any, **kwargs: Any) -> CalledProcessLike:
+
+def _really_run(
+    orig_run: Callable, cmdargs: Sequence[str], *args: Any, **kwargs: Any
+) -> CalledProcessLike:
     LOGGER.info("Running %s", cmdargs)
     real_kwargs = dict(check=True, capture_output=True, text=True)
     real_kwargs.update(kwargs)
@@ -37,13 +40,16 @@ def _really_run(orig_run: Callable, cmdargs: Sequence[str], *args: Any, **kwargs
         exc.add_note(f"STDOUT: {exc.stdout}")
         raise
 
+
 @attrs.frozen
 class Runner:
     _orig_run: Callable = attrs.field(default=subprocess.run)
     _no_dry_run: bool = attrs.field(default=False, kw_only=True)
 
     @functools.wraps(subprocess.run)
-    def run(self, cmdargs: Sequence[str], *args: Any, **kwargs: Any) -> CalledProcessLike:
+    def run(
+        self, cmdargs: Sequence[str], *args: Any, **kwargs: Any
+    ) -> CalledProcessLike:
         if self._no_dry_run:
             return _really_run(self._orig_run, cmdargs, *args, **kwargs)
         else:
@@ -51,7 +57,9 @@ class Runner:
             return _FakeCalledProcess()
 
     @functools.wraps(subprocess.run)
-    def safe_run(self, cmdargs: Sequence[str], *args: Any, **kwargs: Any) -> CalledProcessLike:
+    def safe_run(
+        self, cmdargs: Sequence[str], *args: Any, **kwargs: Any
+    ) -> CalledProcessLike:
         return _really_run(self._orig_run, cmdargs, *args, **kwargs)
 
     @classmethod
@@ -59,6 +67,4 @@ class Runner:
         return cls(
             orig_run=getattr(args, "orig_run", subprocess.run),
             no_dry_run=getattr(args, "no_dry_run", False),
-        ) # type: ignore            
-        
-    
+        )  # type: ignore
