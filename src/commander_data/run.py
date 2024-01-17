@@ -1,7 +1,6 @@
 from __future__ import annotations
 import argparse
 import functools
-import io
 import logging
 import subprocess
 from typing import Any, Callable, Sequence, Protocol, Self

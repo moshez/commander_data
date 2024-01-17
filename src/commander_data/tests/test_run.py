@@ -3,7 +3,6 @@ import unittest
 from hamcrest import (
     assert_that,
     equal_to,
-    contains_string,
     has_property,
     calling,
     raises,
