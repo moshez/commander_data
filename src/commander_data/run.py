@@ -14,6 +14,8 @@ class CalledProcessLike(Protocol): # pragma: no cover
     @property
     def stdout(self) -> str:
         ...
+
+    @property
     def stderr(self) -> str:
         ...
 
@@ -57,7 +59,6 @@ class Runner:
         return cls(
             orig_run=getattr(args, "orig_run", subprocess.run),
             no_dry_run=getattr(args, "no_dry_run", False),
-        )
-            
+        ) # type: ignore            
         
     
