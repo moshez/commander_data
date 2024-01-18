@@ -29,7 +29,7 @@ class _FakeCalledProcess:
 def _really_run(
     orig_run: Callable, cmdargs: Sequence[str], *args: Any, **kwargs: Any
 ) -> CalledProcessLike:
-    LOGGER.info("Running %s", cmdargs)
+    LOGGER.info("Running %s", list(cmdargs))
     real_kwargs = dict(check=True, capture_output=True, text=True)
     real_kwargs.update(kwargs)
     try:
