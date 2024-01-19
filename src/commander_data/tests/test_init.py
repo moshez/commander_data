@@ -36,7 +36,13 @@ class TestCommand(unittest.TestCase):
 
     def test_call_kwargs_list(self):
         assert_that(
-            list(COMMAND.copier(data=["a=b", "c=d"])),
+            list(COMMAND.pip.install(r=["r1.txt", "r2.txt"])),
+            equal_to("pip install -r r1.txt -r r2.txt".split()),
+        )
+
+    def test_call_kwargs_dict(self):
+        assert_that(
+            list(COMMAND.copier(data=dict(a="b", c="d"))),
             equal_to(["copier", "--data", "a=b", "--data", "c=d"]),
         )
 
