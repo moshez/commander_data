@@ -52,7 +52,7 @@ class Runner:
         if self._no_dry_run:
             return _really_run(self._orig_run, cmdargs, *args, **kwargs)
         else:
-            LOGGER.info("Dry run, not running %s", cmdargs)
+            LOGGER.info("Dry run, not running %s", list(cmdargs))
             return _FakeCalledProcess()
 
     @functools.wraps(subprocess.run)
