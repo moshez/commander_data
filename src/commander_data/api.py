@@ -20,6 +20,13 @@ def _get_value_parts_list(value: Iterable[Any], key: str) -> Iterator[str]:
         yield from _get_value_parts(item, key)
 
 
+@_get_value_parts.register(dict)
+def _get_value_parts_dict(value: Mapping[str, str], key: str) -> Iterator[str]:
+    for d_key, d_value in value.items():
+        yield key
+        yield f"{d_key}={d_value}"
+
+
 def _parse_kwargs(kwargs: Mapping[str, Any]) -> Iterator[str]:
     for key, value in kwargs.items():
         if len(key) == 1:
